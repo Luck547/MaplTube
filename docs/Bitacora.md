@@ -24,4 +24,4 @@ Luego me vi este video:
 
 Ya son pasadas las 00:00, hago el primer commit y mañana es otra historia.
 
-###  2022-12-16 09:00 
+###  2022-12-16 0
