@@ -36,6 +36,11 @@ y limpiamos terminal con
 ```bash
 clear
 ```
+Ahora instalamos las dependencias que necesitamos para el proyecto.
+```node
+npm install express dotenv googleapis
+```
+Y ya tenemos nuestro package.json con las dependencias que necesitamos.
 
 
 
