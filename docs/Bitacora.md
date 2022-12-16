@@ -24,4 +24,21 @@ Luego me vi este video:
 
 Ya son pasadas las 00:00, hago el primer commit y mañana es otra historia.
 
-###  2022-12-16 0
+###  2022-12-16 15:00
+Toca hacer toda la configuración de la API de Youtube. No entraré en detalles.
+Y comenzamos nuestro código con un buen npm init.
+next, next, next y ya tenemos nuestro package.json.
+Actualizamos con sudo
+```node
+sudo npm install -g npm@9.2.0
+```
+y limpiamos terminal con 
+```bash
+clear
+```
+
+
+
+#### Important
+The deadline for this assessment is Tuesday 20th of December at 24:00 CET. 
+Please send your script to xxxxxxxxxx@yyyyyy.zzz before this deadline, indicating your name.
