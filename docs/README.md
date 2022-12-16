@@ -11,6 +11,7 @@ The app verifies whether or not an authenticated Youtube user voted on a particu
 - [API Key](https://developers.google.com/youtube/v3/getting-started)
 - [OAuth 2.0 Client ID](https://developers.google.com/identity/protocols/OAuth2)
 - [Express](https://expressjs.com/)
+- [Axios](
 
 
 ### Installing
@@ -24,7 +25,7 @@ git clone https://github.com/Luck547/MaplTube.git
 2. Install NPM packages
 
 ```sh
-npm install
+npm install express axios 
 ```
 
 3. Create a `.env` file in the root directory and add the following
