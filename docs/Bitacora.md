@@ -42,6 +42,12 @@ npm install express dotenv googleapis
 ```
 Y ya tenemos nuestro package.json con las dependencias que necesitamos.
 
+### 2022-12-16 16:00
+Borrador listo. Ahora hace falta cumplir con los requerimientos del challenge. Pero me siento satisfecho con los resultados hasta ahora.
+Aún no termino el tutorial de Youtube, pero ya tengo un buen esquema mental de cómo hacerlo.
+Y ya tengo mi primer commit en Github. (en realidad van 6 commits hasta ahora, pero son los de la configuración inicial del proyecto)
+Pruebas Ok. Muy feliz. Además, en los test, los videos undefined han salido buena música, cosas curiosas y tal.
+
 
 
 #### Important

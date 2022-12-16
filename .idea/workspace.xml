@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b55c289-3776-4e0b-8c81-4ab693ca557c" name="Changes" comment=".ignore Created&#10;.gitignore Created&#10;Root Express EndPoint Created&#10;Postman Collection Created">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MaplTube.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/README.md" afterDir="false" />
+    <list default="true" id="2b55c289-3776-4e0b-8c81-4ab693ca557c" name="Changes" comment="Axios Added&#10;Postman Collection Updated">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Bitacora.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Bitacora.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
     </list>
@@ -60,7 +57,7 @@
       <option name="presentableId" value="Default" />
       <updated>1671144262740</updated>
       <workItem from="1671144263668" duration="11978000" />
-      <workItem from="1671206188871" duration="4124000" />
+      <workItem from="1671206188871" duration="6794000" />
     </task>
     <task id="LOCAL-00001" summary="MaplTube Repo Created">
       <created>1671146572940</created>
@@ -97,7 +94,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671206425351</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Axios Added&#10;Postman Collection Updated">
+      <created>1671211798225</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1671211798225</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -107,6 +111,7 @@
     <MESSAGE value="MaplTube Repo Created" />
     <MESSAGE value="package.json Created&#10;README.md Created&#10;Credentials Created" />
     <MESSAGE value=".ignore Created&#10;.gitignore Created&#10;Root Express EndPoint Created&#10;Postman Collection Created" />
-    <option name="LAST_COMMIT_MESSAGE" value=".ignore Created&#10;.gitignore Created&#10;Root Express EndPoint Created&#10;Postman Collection Created" />
+    <MESSAGE value="Axios Added&#10;Postman Collection Updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="Axios Added&#10;Postman Collection Updated" />
   </component>
 </project>
