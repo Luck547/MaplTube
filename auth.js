@@ -1,6 +1,8 @@
 
 // Begin
 
+// Authentication and Authorization Middleware
+
 // Import passport, strategy, and the Google OAuth2 API keys
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
