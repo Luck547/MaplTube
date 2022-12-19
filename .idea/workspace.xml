@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b55c289-3776-4e0b-8c81-4ab693ca557c" name="Changes" comment="Updating .gitignore">
-      <change beforePath="$PROJECT_DIR$/docs/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/README.md" afterDir="false" />
+    <list default="true" id="2b55c289-3776-4e0b-8c81-4ab693ca557c" name="Changes" comment="Try to Modulize.">
+      <change afterPath="$PROJECT_DIR$/endpoints.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +149,7 @@
       <updated>1671144262740</updated>
       <workItem from="1671144263668" duration="11978000" />
       <workItem from="1671206188871" duration="6794000" />
-      <workItem from="1671441631186" duration="18786000" />
+      <workItem from="1671441631186" duration="20399000" />
     </task>
     <task id="LOCAL-00001" summary="MaplTube Repo Created">
       <created>1671146572940</created>
@@ -261,7 +263,21 @@
       <option name="project" value="LOCAL" />
       <updated>1671463026491</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Ignoring Files.">
+      <created>1671463443356</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1671463443356</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Ignoring Files.">
+      <created>1671463548992</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1671463548992</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -281,6 +297,8 @@
     <MESSAGE value="Ignore Files" />
     <MESSAGE value="Updating README.md" />
     <MESSAGE value="Updating .gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating .gitignore" />
+    <MESSAGE value="Ignoring Files." />
+    <MESSAGE value="Try to Modulize." />
+    <option name="LAST_COMMIT_MESSAGE" value="Try to Modulize." />
   </component>
 </project>
