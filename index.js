@@ -8,6 +8,9 @@ const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 
+// Import CookieParser
+const cookieParser = require('cookie-parser');
+
 // Define the Api Key:
 const apiKey = 'AIzaSyBK1st4o-7-leGvUqgKfwGOwrS46GGtq8E';
 
@@ -41,9 +44,12 @@ console.log(gettherate);
 // Bring back the passport config
 require('./auth');
 
-// Create an express app & initialize passport and session
+// Create an express app
 const app = express();
-app.use(session({ secret: 'Fragsy' }));
+
+// Use the cookie parser, session and passport middlewares
+app.use(cookieParser());
+app.use(session({ secret: 'Fragsy', saveUninitialized: true, resave: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -53,7 +59,11 @@ const baseApiUrl = 'https://www.googleapis.com/youtube/v3'; // For searching vid
 
 // Create a route for the home page
 app.get('/', (req, res) => {
+    console.log(req.cookies);
+    console.log("*****************");
+    console.log(req.session);
     res.send('<a href="/auth/google">Authenticate to YouTube</a>');});
+
 
 // Import Axios
 const axios = require('axios');
@@ -75,8 +85,16 @@ app.get('/oauth2callback', passport.authenticate('google', {
 app.get('/auth/failure', (req, res) => {
     res.send('Failed to authenticate');});
 
+// Create a route for the success
+app.get('/success', isLoggedIn, (req, res) => {
+    let test_html = '<h1>Success</h1>';
+    res.send('Successfully authenticated' + '\n' + test_html);});
+
 // Create a route protected by the authentication
 app.get('/getRating', isLoggedIn, (req, res) => {
+    console.log(req.cookies);
+    console.log("*****************");
+    console.log(req.session);
     //const rating = getRating(req.user);
     const videoId = req.query.videoId;
     const rating = req.query.getRating;
@@ -92,9 +110,12 @@ app.get('/search', async (req, res) => {
         const url = `${baseApiUrl}/search?key=${apiKey}&type=video&part=snippet&q=${searchQuery}`;
         const response = await axios.get(url);
         const tittles = response.data.items.map(item => item.snippet.title);
+        console.log(req.cookies);
+        console.log("*****************");
+        console.log(req.session);
         //res.send(response.data.items);
         res.send(tittles);
-        console.log(response.data.items);
+        //console.log(response.data.items);
     } catch (error) {}});
 
 // The same of search but using the googleapis library
@@ -107,15 +128,20 @@ app.get('/search-with-googleapis', async (req, res) => {
             type: 'video'
         });
         const tittles = response.data.items.map(item => item.snippet.title);
+        console.log(req.cookies);
+        console.log("*****************");
+        console.log(req.session);
         //res.send(response.data.items);
         res.send(tittles);
-        console.log(response.data.items);
+        //console.log(response.data.items);
     } catch (error) {}});
 
 // Create a route for the logout
-app.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
+app.get('/logout', function(req, res, next) {
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+    });
 });
 app.listen(4200, () => {
     console.log('App listening on port 4200 :)');
