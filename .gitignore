@@ -6,3 +6,4 @@
 !/docs/MaplTube.postman_collection.json
 !/package.json
 !/package-lock.json
+/node_modules/
