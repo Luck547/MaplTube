@@ -1,15 +1,23 @@
 
 //Begin
 
-// Import the express and passport module
+// Import the express and passport, passport-session modules
 const express = require('express');
+const session = require('express-session');
 const passport = require('passport');
+
+// Create a function that verifies the user is logged in
+function isLoggedIn(req, res, next) {
+    req.user ? next() : res.sendStatus(401);}
 
 // Bring back the passport config
 require('./auth');
 
-// Create an express app
+// Create an express app & initialize passport and session
 const app = express();
+app.use(session({ secret: 'Fragsy' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Create a route for the home page
 app.get('/', (req, res) => {
@@ -32,16 +40,20 @@ app.get('/auth/failure', (req, res) => {
 });
 
 // Create a route protected by the authentication
-app.get('/getRating', (req, res) => {
+app.get('/getRating', isLoggedIn, (req, res) => {
     res.send('This is protected');
 });
 
 
+// Create a route for the logout
+app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+});
+
 app.listen(4200, () => {
     console.log('App listening on port 4200 :)');
 });
-
-
 
 // End
 

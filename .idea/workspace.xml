@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b55c289-3776-4e0b-8c81-4ab693ca557c" name="Changes" comment="auth.js Ok. | Connection to Google Ok.">
+    <list default="true" id="2b55c289-3776-4e0b-8c81-4ab693ca557c" name="Changes" comment="In the middle of.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +150,7 @@
       <updated>1671144262740</updated>
       <workItem from="1671144263668" duration="11978000" />
       <workItem from="1671206188871" duration="6794000" />
-      <workItem from="1671441631186" duration="2214000" />
+      <workItem from="1671441631186" duration="4391000" />
     </task>
     <task id="LOCAL-00001" summary="MaplTube Repo Created">
       <created>1671146572940</created>
@@ -219,7 +222,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671443520499</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="In the middle of.">
+      <created>1671444082818</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1671444082818</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,6 +244,7 @@
     <MESSAGE value="Again." />
     <MESSAGE value="npm init | index.js created" />
     <MESSAGE value="auth.js Ok. | Connection to Google Ok." />
-    <option name="LAST_COMMIT_MESSAGE" value="auth.js Ok. | Connection to Google Ok." />
+    <MESSAGE value="In the middle of." />
+    <option name="LAST_COMMIT_MESSAGE" value="In the middle of." />
   </component>
 </project>
