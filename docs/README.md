@@ -1,6 +1,6 @@
 # MaplTube
 
-The app verifies whether or not an authenticated Youtube user voted on a particular YouTube video based on liking, disliking, or not voting.
+The app verifies whether an authenticated YouTube user voted on a particular YouTube video based on liking, disliking, or not voting.
 
 ## Getting Started
 
@@ -46,16 +46,13 @@ CLIENT_SECRET= // Your client secret
 npm start
 ```
 
-2. Open your browser and go to `http://localhost:4200`
-3. Click on the `Authenticate to YouTube` hyperlink
-4. Enter the video ID of the video you want to check
-5. Click on the `Check` button
-6. The app will return whether or not you voted on the video
-7. Click on the `Logout` button to logout or go to `http://localhost:4200/logout`
-8. Click on the `Login with Google` button to login again
-9. Repeat steps 4-8
-10. Click on the `Exit` button to exit the app
-11. Click on the `Login with Google` button to login again
-12. Repeat steps 4-10
-13. Click on the `Exit` button to exit the app
-14. Loop
+1. Verify the server is running on `localhost:4200` after npm start or node index.js.
+2. Open your browser and go to `http://localhost:4200`.
+3. Click on the `Authenticate to YouTube` hyperlink.
+4. Enter the video ID of the video you want to check.
+5. Click on the `Check` button.
+6. The app will return whether or not you voted on the video.
+7. Click on the `Logout` button to logout or go to `http://localhost:4200/logout`.
+8. Loop.
+
+End

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b55c289-3776-4e0b-8c81-4ab693ca557c" name="Changes" comment="Updating README.md">
+    <list default="true" id="2b55c289-3776-4e0b-8c81-4ab693ca557c" name="Changes" comment="Updating .gitignore">
       <change beforePath="$PROJECT_DIR$/docs/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -147,7 +147,7 @@
       <updated>1671144262740</updated>
       <workItem from="1671144263668" duration="11978000" />
       <workItem from="1671206188871" duration="6794000" />
-      <workItem from="1671441631186" duration="18256000" />
+      <workItem from="1671441631186" duration="18786000" />
     </task>
     <task id="LOCAL-00001" summary="MaplTube Repo Created">
       <created>1671146572940</created>
@@ -247,7 +247,21 @@
       <option name="project" value="LOCAL" />
       <updated>1671462734205</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Updating .gitignore">
+      <created>1671462784195</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1671462784195</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Updating .gitignore">
+      <created>1671463026491</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1671463026491</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -266,6 +280,7 @@
     <MESSAGE value="Now Working." />
     <MESSAGE value="Ignore Files" />
     <MESSAGE value="Updating README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updating README.md" />
+    <MESSAGE value="Updating .gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating .gitignore" />
   </component>
 </project>
