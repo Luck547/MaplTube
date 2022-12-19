@@ -1,10 +1,47 @@
 
 //Begin
 
-// Import the express and passport, passport-session modules
+// Import the express, the express-session and passport modules
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
+
+// Import Axios
+const axios = require('axios');
+
+// Define the Api Key:
+const apiKey = 'AIzaSyBK1st4o-7-leGvUqgKfwGOwrS46GGtq8E';
+
+// Import The Google Apis
+const {google} = require('googleapis');
+
+// Variables Youtube googleapis
+const youtube = google.youtube({
+    version: 'v3',
+    auth: apiKey
+});
+
+// Function to retrieve the rating of a video
+
+async function getVideoRating(videoId) {
+    try {
+        // Call the youtube.videos.list method to retrieve the rating of a video
+        const response = await youtube.videos.getRating(
+            {part: 'id, rating', id: videoId}
+        );
+        // Return the rating of the video
+        const rating = response.data.items[0].rating;
+        console.log(rating);
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getVideoRating('M7lc1UVf-VE');
+
+// https://www.googleapis.com/youtube/v3/getRating/?key=apiKey&videoId=videoId
+// https://www.googleapis.com/youtube/v3/search/?key=apiKey&part=snippet&maxResults=25&q=videoId
 
 // Create a function that verifies the user is logged in
 function isLoggedIn(req, res, next) {
@@ -19,6 +56,10 @@ app.use(session({ secret: 'Fragsy' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Define the  Base URL for YouTube Data API
+//const baseApiUrl = 'https://www.googleapis.com/youtube/v3/videos'; // For getting video details
+const baseApiUrl = 'https://www.googleapis.com/youtube/v3'; // For searching videos
+
 // Create a route for the home page
 app.get('/', (req, res) => {
   res.send('<a href="/auth/google">Authenticate to YouTube</a>');
@@ -30,7 +71,7 @@ app.get('/auth/google',
 
 // Create a route for the callback
 app.get('/oauth2callback', passport.authenticate('google', {
-    successRedirect: '/getRating',
+    successRedirect: '/success',
     failureRedirect: '/auth/failure'
 }));
 
@@ -41,7 +82,53 @@ app.get('/auth/failure', (req, res) => {
 
 // Create a route protected by the authentication
 app.get('/getRating', isLoggedIn, (req, res) => {
-    res.send('This is protected');
+    //const rating = getRating(req.user);
+    const videoId = req.query.videoId;
+    const rating = req.query.getRating;
+    //const response = await axios.get(`${baseApiUrl}/getRating/?key=${apiKey}&videoId=${videoId}&rating=${rating}`);
+    //const url = `${baseApiUrl}/getRating?key=${apiKey}&videoId=${videoId}&rating=${rating}`;
+    //const url = `${baseApiUrl}/getRating?id=${videoId}`;
+    const url = `${baseApiUrl}/getRating?key=${apiKey}&id=3VHCxuxtuL8`;
+    const response = axios.get(url);
+    //res.send(`Welcome ${req.user.displayName}!` + ` Your rating for the video ${videoId} is ${rating}`);
+    //console.log(`Your rating for the video ${videoId} is ${response}`);
+    letssee = getVideoRating('M7lc1UVf-VE');
+    res.send(letssee, videoId, rating, response);
+});
+
+// New testing route using Axios and plain JavaScript
+app.get('/search', async (req, res, next) => {
+    try {
+        const searchQuery = req.query.q;
+        const url = `${baseApiUrl}/search?key=${apiKey}&type=video&part=snippet&q=${searchQuery}`;
+        const response = await axios.get(url);
+        const tittles = response.data.items.map(item => item.snippet.title);
+        //res.send(response.data.items);
+        res.send(tittles);
+        console.log(response.data.items);
+    } catch (error) {
+        next(error);
+    }
+
+});
+
+// The same of search but using the googleapis library
+app.get('/search-with-googleapis', async (req, res, next) => {
+    try {
+        const searchQuery = req.query.q;
+        const response = await youtube.search.list({
+            part: 'snippet',
+            q: searchQuery,
+            type: 'video'
+        });
+        const tittles = response.data.items.map(item => item.snippet.title);
+        //res.send(response.data.items);
+        res.send(tittles);
+        console.log(response.data.items);
+    } catch (error) {
+        next(error);
+    }
+
 });
 
 

@@ -1,1 +1,8 @@
 !/MaplTube.iml
+/.idea/
+!/docs/Sensitive_information/API_key_1
+!/docs/Sensitive_information/client_secret_765261513837-ritbotus23ca7rnii9s04bakm8dlpu7f.apps.googleusercontent.com.json
+!/docs/Bitacora.md
+!/docs/MaplTube.postman_collection.json
+!/package.json
+!/package-lock.json
