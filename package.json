@@ -1,0 +1,25 @@
+{
+  "name": "mapltube",
+  "version": "1.0.1",
+  "description": "The app verifies whether or not an authenticated Youtube user voted on a particular YouTube video based on liking, disliking, or not voting.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Luck547/MaplTube.git"
+  },
+  "keywords": [
+    "Fragsy"
+  ],
+  "author": "Alan Lucciano Pindo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Luck547/MaplTube/issues"
+  },
+  "homepage": "https://github.com/Luck547/MaplTube#readme"
+}
