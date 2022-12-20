@@ -56,8 +56,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Define the  Base URL for YouTube Data API
-//const baseApiUrl = 'https://www.googleapis.com/youtube/v3/videos'; // For getting video details
-
+const baseApiUrl = 'https://www.googleapis.com/youtube/v3/videos/getRating'; // For getting video details
 
 // Create a route for the home page
 app.get('/', (req, res) => {
@@ -108,6 +107,35 @@ app.get('/logout', function(req, res, next) {
         res.redirect('/');
     });
 });
+
+// Create a route that get the ranking of a video by its ID with the YouTube Data API and the OAuth2 Client
+app.get('/getRating_or_not', function (req, res) {
+    const oauth2Client = new OAuth2(
+        GOOGLE_CLIENT_ID,
+        GOOGLE_CLIENT_SECRET,
+        'http://localhost:4200/oauth2callback'
+    );
+
+    const scopes = [
+        'https://www.googleapis.com/auth/youtube.readonly'
+    ];
+    const url = oauth2Client.generateAuthUrl({
+        access_type: 'online',
+        scope: scopes
+    }
+    );
+    oauth2Client.setCredentials({
+        access_token: req.cookies.tokens.access_token,
+        refresh_token: req.cookies.tokens.refresh_token
+    });
+    // Example: https://www.googleapis.com/youtube/v3/getRating/?key=apiKey&videoId=videoId
+    // Example: http://localhost:4200/getRating/?videoId=XsUY50S1_Fk
+    const videoId = req.query.videoId;
+    const urlytal = `${baseApiUrl}?key=${GOOGLE_CLIENT_ID}&videoId=${videoId}`;
+    console.log(url);
+    oauth2Client.request({url: urlytal}, function (err, response) {res.send(response.data);
+        });});
+
 app.listen(4200, () => {
     console.log('App listening on port 4200 :)');
 });
