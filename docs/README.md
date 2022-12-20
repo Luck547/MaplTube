@@ -15,6 +15,12 @@ The app verifies whether an authenticated YouTube user voted on a particular You
 - [Passport Google OAuth20](https://www.passportjs.org/packages/passport-google-oauth20/)
 - [Axios](https://www.npmjs.com/package/axios)
 - [Google Apis](https://www.npmjs.com/package/googleapis)
+- [EJS](https://ejs.co/)
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [cookie-session](https://www.npmjs.com/package/cookie-session)
+- [nodemon](https://www.npmjs.com/package/nodemon)
+- [cookie-parser](https://www.npmjs.com/package/cookie-parser)
 
 
 ### Installing
@@ -36,6 +42,8 @@ npm install
 ```JS
 CLIENT_ID= // Your client ID
 CLIENT_SECRET= // Your client secret
+YOUTUBE_TOKEN=AIzaSyBK1st4o-7-leGvUqgKfwGOwrS46GGtq8E // Your YouTube API key
+```
 
 
 ## Usage
