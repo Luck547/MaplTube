@@ -27,7 +27,7 @@ module.exports = {
             keys.web.javascript_origins[0]
         ],
         scopes: [
-            'https://www.googleapis.com/auth/youtube.readonly'
+            'https://www.googleapis.com/auth/youtube'
         ]
         }
 }

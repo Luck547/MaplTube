@@ -25,6 +25,7 @@ const OAuth2 = google.auth.OAuth2;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const GOOGLE_CLIENT_ID = '765261513837-vbc1bh28rbvgn3qahk5ju7i0u4fvcjfm.apps.googleusercontent.com';
 const GOOGLE_CLIENT_SECRET = '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';
+const GOOGLE_REDIRECT_URI = 'http://localhost:4200/oauth2callback';
 
 // Create a passport middleware to handle Google OAuth2 login
 passport.use(new GoogleStrategy({
@@ -71,7 +72,7 @@ app.get('/oauth2callback', function (req, res) {
     const oauth2Client = new OAuth2(
         GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET,
-        'http://localhost:4200/oauth2callback'
+        GOOGLE_REDIRECT_URI
     );
     if(req.query.error){
         res.send('You must allow the app to view your profile data.');
@@ -87,7 +88,7 @@ app.get('/oauth2callback', function (req, res) {
             } else {
                 console.log('Successfully authenticated');
                 oauth2Client.setCredentials(token);
-                res.cookie('tokens', token);
+                res.cookies('tokens', token);
                 res.redirect('/success');
             }
     });}});
@@ -109,32 +110,43 @@ app.get('/logout', function(req, res, next) {
 });
 
 // Create a route that get the ranking of a video by its ID with the YouTube Data API and the OAuth2 Client
-app.get('/getRating_or_not', function (req, res) {
+
+
+app.get('/gettest', function (req, res) {
+    const videoId = req.query.videoId;
+    console.log(videoId);
+
     const oauth2Client = new OAuth2(
         GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET,
-        'http://localhost:4200/oauth2callback'
+        GOOGLE_REDIRECT_URI
     );
-
     const scopes = [
-        'https://www.googleapis.com/auth/youtube.readonly'
+        'https://www.googleapis.com/auth/youtube.force-ssl',
+        'https://www.googleapis.com/auth/youtube.readonly',
+        'https://www.googleapis.com/auth/youtube',
     ];
-    const url = oauth2Client.generateAuthUrl({
-        access_type: 'online',
-        scope: scopes
-    }
-    );
-    oauth2Client.setCredentials({
-        access_token: req.cookies.tokens.access_token,
-        refresh_token: req.cookies.tokens.refresh_token
+    oauth2Client.youtube = google.youtube({
+        version: 'v3',
+        auth: oauth2Client,
+        scopes: scopes
     });
-    // Example: https://www.googleapis.com/youtube/v3/getRating/?key=apiKey&videoId=videoId
-    // Example: http://localhost:4200/getRating/?videoId=XsUY50S1_Fk
-    const videoId = req.query.videoId;
-    const urlytal = `${baseApiUrl}?key=${GOOGLE_CLIENT_ID}&videoId=${videoId}`;
-    console.log(url);
-    oauth2Client.request({url: urlytal}, function (err, response) {res.send(response.data);
-        });});
+    oauth2Client.setCredentials(req.cookies.tokens);
+    oauth2Client.youtube.videos.getRating({
+        id: videoId
+    }, function (err, response) {
+        oauth2Client.setCredentials(token);
+        res.cookie('tokens', token);
+        res.redirect('/success');
+        const videos = response.data.items[0].getRating();
+        console.log(videos);
+        res.send(videos);
+    }).catch((err) => {
+        console.log(err);
+        res.send(err);
+    });
+});
+
 
 app.listen(4200, () => {
     console.log('App listening on port 4200 :)');

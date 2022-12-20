@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b55c289-3776-4e0b-8c81-4ab693ca557c" name="Changes" comment="Working!">
+    <list default="true" id="2b55c289-3776-4e0b-8c81-4ab693ca557c" name="Changes" comment="Permission Scope issues.">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -150,7 +152,7 @@
       <workItem from="1671206188871" duration="6794000" />
       <workItem from="1671441631186" duration="29472000" />
       <workItem from="1671476321125" duration="3408000" />
-      <workItem from="1671481124562" duration="17371000" />
+      <workItem from="1671481124562" duration="23596000" />
     </task>
     <task id="LOCAL-00001" summary="MaplTube Repo Created">
       <created>1671146572940</created>
@@ -327,7 +329,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671541823443</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Permission Scope issues.">
+      <created>1671546065672</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1671546065672</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -355,6 +364,7 @@
     <MESSAGE value="Trying Cookies. token_type: 'Bearer',&#10;                    id_token: 'eyJhbG" />
     <MESSAGE value="Testing" />
     <MESSAGE value="Working!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working!" />
+    <MESSAGE value="Permission Scope issues." />
+    <option name="LAST_COMMIT_MESSAGE" value="Permission Scope issues." />
   </component>
 </project>
