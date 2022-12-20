@@ -1,6 +1,9 @@
 //Begin
-                            // Start the whole thing with nodemon index.js
-// Import the dotenv, express, the express-session and passport modules
+                            // Start the whole thing with nodemon index.js or node index.js
+// Import the dotenv, express, the express-session and passport modules and more
+
+'use strict';
+
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
@@ -13,9 +16,14 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 // Import The Google Apis
 const {google} = require('googleapis');
+const {response} = require("express");
+console.log(response)
 // Define the OAuth2 Client
 const OAuth2 = google.auth.OAuth2;
-//  https://www.googleapis.com/youtube/v3/getRating/?key=apiKey&videoId=videoId
+// initialize the YouTube API library
+const youtube = google.youtube('v3');
+console.log(youtube)
+//  https://www.googleapis.com/youtube/v3/getRating/?key=GOOGLE_CLIENT_ID&videoId=videoId
 //  https://www.googleapis.com/youtube/v3/getRating/?key=AIzaSyBK1st4o-7-leGvUqgKfwGOwrS46GGtq8E&videoId=QZ4BXGgmATU
 //  https://www.googleapis.com/youtube/v3/search/?key=apiKey&part=snippet&maxResults=25&q=videoId
 //  https://www.googleapis.com/youtube/v3/search/?key=AIzaSyBK1st4o-7-leGvUqgKfwGOwrS46GGtq8E&part=snippet&maxResults=25&q=QZ4BXGgmATU
@@ -23,9 +31,10 @@ const OAuth2 = google.auth.OAuth2;
                                 // Authentication and Authorization Middleware
 // Declare strategy, and the Google OAuth2 API keys
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const GOOGLE_CLIENT_ID = '765261513837-vbc1bh28rbvgn3qahk5ju7i0u4fvcjfm.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = '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';
-const GOOGLE_REDIRECT_URI = 'http://localhost:4200/oauth2callback';
+const GOOGLE_CLIENT_ID = CONFIG.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = CONFIG.GOOGLE_CLIENT_SECRET;
+const GOOGLE_REDIRECT_URI = CONFIG.GOOGLE_REDIRECT_URI;
+const YOUTUBE_TOKEN = CONFIG.YOUTUBE_TOKEN;
 
 // Create a passport middleware to handle Google OAuth2 login
 passport.use(new GoogleStrategy({
@@ -35,7 +44,7 @@ passport.use(new GoogleStrategy({
         cb: "http://localhost:4200/oauth2callback",
         passReqToCallback: true
     },
-    function(request, accessToken, refreshToken, profile, done) {
+    async function (request, accessToken, refreshToken, profile, done) {
         return done(null, profile);
     }));
 // Create a passport middleware to handle User serialization
@@ -88,62 +97,56 @@ app.get('/oauth2callback', function (req, res) {
             } else {
                 console.log('Successfully authenticated');
                 oauth2Client.setCredentials(token);
-                res.cookies('tokens', token);
+                res.cookie('tokens', token);
                 res.redirect('/success');
             }
-    });}});
-
+    });
+    }
+});
 
 // Create a route for the failure
 app.get('/auth/failure', (req, res) => {
     res.send('Failed to authenticate');});
 // Create a route for the success
 app.get('/success', (req, res) => {
-    let test_html = '<h1>Success</h1>';
-    res.send('Successfully authenticated' + '\n' + test_html);});
+    let test_html = '<h1> Now go to http://localhost:4200/getRating/?videoId=3VHCxuxtuL8 or your desire videoId from the URL YouTube link </h1>';
+    res.send('Successfully authenticated' + '\n' + test_html);
+    console.log(baseApiUrl + '?key=' + YOUTUBE_TOKEN + '&videoId=' + 'QZ4BXGgmATU');});
 // Create a route for the logout
 app.get('/logout', function(req, res, next) {
     req.logout(function(err) {
         if (err) { return next(err); }
         res.redirect('/');
-    });
-});
+        console.log('Logged out');});});
+
 
 // Create a route that get the ranking of a video by its ID with the YouTube Data API and the OAuth2 Client
-
-
-app.get('/gettest', function (req, res) {
+app.get('/getRating', async function (req, res) {
     const videoId = req.query.videoId;
     console.log(videoId);
-
     const oauth2Client = new OAuth2(
         GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET,
         GOOGLE_REDIRECT_URI
     );
     const scopes = [
-        'https://www.googleapis.com/auth/youtube.force-ssl',
-        'https://www.googleapis.com/auth/youtube.readonly',
+        'https://www.googleapis.com/auth/youtubepartner',
         'https://www.googleapis.com/auth/youtube',
+        'https://www.googleapis.com/auth/youtube.force-ssl',
     ];
+
     oauth2Client.youtube = google.youtube({
         version: 'v3',
         auth: oauth2Client,
         scopes: scopes
     });
     oauth2Client.setCredentials(req.cookies.tokens);
-    oauth2Client.youtube.videos.getRating({
-        id: videoId
-    }, function (err, response) {
-        oauth2Client.setCredentials(token);
-        res.cookie('tokens', token);
-        res.redirect('/success');
-        const videos = response.data.items[0].getRating();
-        console.log(videos);
-        res.send(videos);
-    }).catch((err) => {
-        console.log(err);
-        res.send(err);
+
+    const response = await oauth2Client.youtube.videos.getRating({
+        id: videoId,
+    }, async function (response2) {
+        console.log(response2 * response);
+        res.send(response  + response2);
     });
 });
 
@@ -151,5 +154,26 @@ app.get('/gettest', function (req, res) {
 app.listen(4200, () => {
     console.log('App listening on port 4200 :)');
 });
+
+// example of a video ID response
+//{
+//    "kind": "youtube#videoGetRatingResponse",
+//    "etag": "CNWHKXVdwtQa2ruz_Qyl34C-z-o",
+//    "items": [
+//    {
+//        "videoId": "XsUY50S1_Fk",
+//        "rating": "like"
+//    }
+//]
+//}
+
+// Some tings to improve:
+// 1. The OAuth2 Client is not working properly, it is not getting the token from the cookies
+// 2. The YouTube Data API is not working properly, it is not getting the video rating
+// 3. To fix the scope of the OAuth2 Client, I have to use the Google API Console, but I don't know how to do it
+// 4. The front-end is not working properly, it is not getting the videoId from the URL
+// 5. The front-end is not working properly, it is not getting the video rating from the back-end
+
+
 
 // End
