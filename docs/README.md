@@ -42,7 +42,7 @@ sudo npm install
 ```JS
 CLIENT_ID= // Your client ID
 CLIENT_SECRET= // Your client secret
-YOUTUBE_TOKEN=AIzaSyBK1st4o-7-leGvUqgKfwGOwrS46GGtq8E // Your YouTube API key
+YOUTUBE_TOKEN=  // Your YouTube API key
 ```
 
 
@@ -68,11 +68,13 @@ node index.js
 1. Verify the server is running on `localhost:4200` after npm start or node index.js.
 2. Open your browser and go to `http://localhost:4200`.
 3. Click on the `Authenticate to YouTube` hyperlink.
-4. Lind and login on your Google Acount (ask me it needed to add more tester users.
-5. Enter the video ID of the video you want to check. The easy way, in the /success endnpoint in the browser paste: http://localhost:4200/getRating/?videoId=3VHCxuxtuL8
+4. Lind and login on your Google Account (ask me it needed to add tester users.
+5. Enter the video ID of the video you want to check. The easy way, in the /success endpoint in the browser paste: http://localhost:4200/getRating/?videoId=3VHCxuxtuL8
 6. Click on the `Enter` keyboard execution.
-7. The app will return whether or not you voted on the video.
-8. Click on the `Logout` button to logout or go to `http://localhost:4200/logout`.
+7. The app will return whether you voted on the video.
+8. Click on the `Logout` button to log out or go to `http://localhost:4200/logout`.
 9. Loop.
+
+You can also use Postman to test the app.
 
 End
