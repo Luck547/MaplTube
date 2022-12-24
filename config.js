@@ -1,8 +1,8 @@
 
-const YOUTUBE_TOKEN = 'AIzaSyD1m8mu9rBNy1di-MhK9n49I7lC20U6g00';
-const GOOGLE_REDIRECT_URI = 'http://localhost:4200/oauth2callback';
-const GOOGLE_CLIENT_SECRET = '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';
-const GOOGLE_CLIENT_ID = '765261513837-vbc1bh28rbvgn3qahk5ju7i0u4fvcjfm.apps.googleusercontent.com';
+const YOUTUBE_TOKEN = process.env.YOUTUBE_TOKEN;
+const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
 //  Some Setup
 const port = process.env.PORT || 4200;
