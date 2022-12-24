@@ -22,6 +22,7 @@ console.log(response)
 const OAuth2 = google.auth.OAuth2;
 // initialize the YouTube API library
 const youtube = google.youtube('v3');
+//const gapi = require('gapi');
 console.log(youtube)
 //  https://www.googleapis.com/youtube/v3/getRating/?key=GOOGLE_CLIENT_ID&videoId=videoId
 //  https://www.googleapis.com/youtube/v3/getRating/?key=AIzaSyBK1st4o-7-leGvUqgKfwGOwrS46GGtq8E&videoId=QZ4BXGgmATU
@@ -119,9 +120,17 @@ app.get('/logout', function(req, res, next) {
         res.redirect('/');
         console.log('Logged out');});});
 
+app.get('/index', (req, res) => {
+    res.redirect('/index.html');});
+
+app.get('/test', function(request, response){
+    response.sendFile('index.html');
+});
+
 
 // Create a route that get the ranking of a video by its ID with the YouTube Data API and the OAuth2 Client
 app.get('/getRating', async function (req, res) {
+
     const videoId = req.query.videoId;
     console.log(videoId);
     const oauth2Client = new OAuth2(
@@ -142,13 +151,46 @@ app.get('/getRating', async function (req, res) {
     });
     oauth2Client.setCredentials(req.cookies.tokens);
 
-    const response = await oauth2Client.youtube.videos.getRating({
+    const response = oauth2Client.youtube.videos.getRating({
         id: videoId,
-    }, async function (response2) {
-        console.log(response2 * response);
+    },  function (response2) {
+        console.log(response);
         res.send(response  + response2);
     });
+
+    /**
+     * Set required API keys and check authentication status.
+     */
+    this.handleClientLoad = function(apiKey) {
+        gapi.client.setApiKey(apiKey);
+    };
+
+    /**
+     * Load the Google Cloud Storage API.
+     */
+    this.initializeApi = function(apiVersion){
+        gapi.client.load('storage', apiVersion).then(function success(res) {
+            res.send(res);
+                console.log('loaded storage api');
+            },
+            function error(res) {
+                return alert('Error loading storage api: ' + JSON.stringify(res)); // throw error
+            });
+    };
+
+    /**
+     * Google Cloud Storage API request to retrieve the list of buckets in
+     * your Google Cloud Storage project.
+     */
+    this.listBuckets = function(projectId) {
+        var request = gapi.client.storage.buckets.list({  // <-- ERROR
+            'project': projectId
+        });
+        console.log(request);
+    };
+
 });
+
 
 
 app.listen(4200, () => {
