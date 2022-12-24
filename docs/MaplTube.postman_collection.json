@@ -1,0 +1,525 @@
+{
+	"info": {
+		"_postman_id": "ee03cd6f-cae9-4e00-b2d3-75f529c87ac5",
+		"name": "MaplTube",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12269458"
+	},
+	"item": [
+		{
+			"name": "Root EndPoint",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4200",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4200"
+				}
+			},
+			"response": [
+				{
+					"name": "Root EndPoint",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000"
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "24"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"18-jnKI0gArKUrxhtfHPXsSsdjcS5o\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 16 Dec 2022 15:51:02 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "Hello from MaplTube API!"
+				}
+			]
+		},
+		{
+			"name": "Search_query test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/search?q=foo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "foo"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Search_query test",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/search?search_query=foo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search"
+							],
+							"query": [
+								{
+									"key": "search_query",
+									"value": "foo"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "3"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3-C+7Hteo/D9vJXQ3UfzxbwnXaijM\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 16 Dec 2022 16:39:12 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "foo"
+				},
+				{
+					"name": "Search_query test",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/search?search_query=foo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search"
+							],
+							"query": [
+								{
+									"key": "search_query",
+									"value": "foo"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "305"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"131-FAY4qwyfqWhgBs50QPfvm12ODQA\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 16 Dec 2022 17:08:42 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    \"Nando Fortunato - It&#39;s Undefined (NICCKO Remix)\",\n    \"Nando Fortunato - It&#39;s Undefined #DeepDiscoRecords\",\n    \"10-hour loop - BEING UNDEFINED - Energetic Synthesis of Being\",\n    \"nowifi, Jack Shore &amp; FROZT - Undefined (feat. Gregory Dillon)\",\n    \"Nowifi, Jack Shore, FROZT - Undefined (ft. Gregory Dillon)\"\n]"
+				}
+			]
+		},
+		{
+			"name": "Search_query test with Googleapis",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/search-with-googleapis?q=fragsy",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"search-with-googleapis"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "fragsy"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Search_query test with Googleapis",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/search-with-googleapis?search_query=foo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search-with-googleapis"
+							],
+							"query": [
+								{
+									"key": "search_query",
+									"value": "foo"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "417"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1a1-q/vUyzU4IvoYTaz/NL+dO4BmLO4\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 16 Dec 2022 17:55:44 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    \"แก้วลืมคอน | EP.11 (7/7) | 3 มี.ค. 64 | one31\",\n    \"Що Україні робити зі складами з боєприпасами у Придністров&#39;ї - &quot;Нічна варта&quot;\",\n    \"Countable and uncountable nouns: The Grammar Gameshow Episode 27\",\n    \"Why is everyone ignoring the Heat? | First Take\",\n    \"Richard Branson soars into space aboard Virgin Galactic rocket plane\"\n]"
+				},
+				{
+					"name": "Search_query test with Googleapis",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/search-with-googleapis?q=foo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search-with-googleapis"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "foo"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "195"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"c3-MnYKfIwrYPBlKwIyBKNHD2/WV5M\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 16 Dec 2022 17:56:29 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    \"Foo Fighters - Everlong (Official HD Video)\",\n    \"Foo Fighters - The Pretender\",\n    \"Foo Fighters - Best Of You (Official Music Video)\",\n    \"Foo Fighters. Walk.\",\n    \"FooFighters - Greatest Hits (Full Album)\"\n]"
+				},
+				{
+					"name": "Search_query test with Googleapis",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/search-with-googleapis?q=kabbalah",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search-with-googleapis"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "kabbalah"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "223"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"df-hhyU8edKpuo1oIIzg/OsRx5B89Q\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 16 Dec 2022 17:56:49 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    \"What is Kabbalah?\",\n    \"Jewish Mysticism Explained | Exploring Kabbalah\",\n    \"Cosa è la Kabbalah - prima classe percorso Kabbalah 1\",\n    \"Abraham Abulafia &amp; Ecstatic Kabbalah\",\n    \"Kabbalist Explains Kabbalah and How it Originated\"\n]"
+				},
+				{
+					"name": "Search_query test with Googleapis",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/search-with-googleapis?q=fragsy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"search-with-googleapis"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "fragsy"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "189"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"bd-BegL1MWZvVhuY3Q9+CVqjK6kOmA\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 16 Dec 2022 17:57:17 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    \"THE RETURN OF FRAGSY - Stream Highlights #1\",\n    \"Sign In your account in Fragsy\",\n    \"Connect your wallet to Fragsy Marketplace\",\n    \"Fragsy Highlights #1 | Gang Gang\",\n    \"Fragsy Highlights #2 | Mood\"\n]"
+				}
+			]
+		}
+	]
+}
