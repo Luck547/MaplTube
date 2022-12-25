@@ -24,6 +24,7 @@
   "homepage": "https://github.com/Luck547/MaplTube#readme",
   "dependencies": {
     "axios": "^1.2.1",
+    "coffee-script": "^1.12.7",
     "coffeescript": "^2.7.0",
     "cookie-parser": "^1.4.6",
     "cookie-session": "^2.0.0",
@@ -34,9 +35,13 @@
     "gapi": "^0.0.3",
     "google-auth-library": "^8.7.0",
     "googleapis": "^109.0.1",
+    "iced-coffee-script": "^108.0.14",
     "jsonwebtoken": "^9.0.0",
     "nodemon": "^2.0.20",
+    "open": "^8.4.0",
     "passport": "^0.6.0",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "request": "^2.88.2",
+    "server-destroy": "^1.0.1"
   }
 }

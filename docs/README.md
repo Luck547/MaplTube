@@ -57,7 +57,7 @@ or
 
 
 ```JS
-nodemon index.js
+nodemon .
 ```
 or even 
 
