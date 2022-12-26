@@ -11,13 +11,13 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 // Import The Google Apis
 const {google} = require('googleapis');
-const {response} = require("express");
+//const {response} = require("express");
 // Define the OAuth2 Client
 const OAuth2 = google.auth.OAuth2;
 // initialize the YouTube API library
 const youtube = google.youtube('v3');
 // Initialize gapi
-const gapi = require('googleapis');
+//const gapi = require('googleapis');
 
 
                                 // Authentication and Authorization Middleware
@@ -26,7 +26,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const GOOGLE_CLIENT_ID = CONFIG.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = CONFIG.GOOGLE_CLIENT_SECRET;
 const GOOGLE_REDIRECT_URI = CONFIG.GOOGLE_REDIRECT_URI;
-const YOUTUBE_TOKEN = CONFIG.YOUTUBE_TOKEN;
+//const YOUTUBE_TOKEN = CONFIG.YOUTUBE_TOKEN;
 
 // Create a passport middleware to handle Google OAuth2 login
 passport.use(new GoogleStrategy({
@@ -59,7 +59,7 @@ app.use(passport.session());
 
 // Define the  Base URL for YouTube Data API
 //const baseApiUrl = 'https://www.googleapis.com/youtube/v3/videos/getRating'; // For getting video details
-const baseApiUrl = 'https://www.googleapis.com/youtube/v3/videos'; // For getting video details
+//const baseApiUrl = 'https://www.googleapis.com/youtube/v3/videos'; // For getting video details
 
 // Create a route for the home page
 app.get('/', (req, res) => {
@@ -116,41 +116,46 @@ app.get('/logout', function(req, res, next) {
 
 // Create a route that get the ranking of a video by its ID with the YouTube Data API and the OAuth2 Client
 app.get('/getRating', async (req, res) => {
-
-    var OAUTH2_SCOPES = [
-        'https://www.googleapis.com/auth/youtube',
-        'https://www.googleapis.com/auth/youtube.force-ssl',
-        'https://www.googleapis.com/auth/youtube.readonly',
-        ];
-
-
-
     // Get the videoId from the URL
     const videoId = req.query.videoId;
+    console.log(videoId);
     // Get the OAuth2 Client
     const oauth2Client = new OAuth2(
         GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET,
         GOOGLE_REDIRECT_URI
     );
-    // Set the credentials
+    console.log(oauth2Client);
+    const SCOPES = [
+        'https://www.googleapis.com/auth/youtube',
+        'https://www.googleapis.com/auth/youtube.force-ssl',
+        'https://www.googleapis.com/auth/youtube.readonly',
+        ];
+    console.log(SCOPES);
+    // Get the token from the cookies
+    const token = req.cookies.tokens;
+    console.log(token);
+// Set the credentials
     oauth2Client.setCredentials({
         access_token: req.cookies.tokens.access_token,
         refresh_token: req.cookies.tokens.refresh_token
     });
+    console.log(oauth2Client);
+
     // Get the rating of the video
-    const response = await youtube.videos.getRating({
+    const response1 = youtube.videos.getRating({
         client_id: GOOGLE_CLIENT_ID,
         redirect_uri: GOOGLE_REDIRECT_URI,
         response_type: 'token',
-        scope: OAUTH2_SCOPES,
+        scope: SCOPES,
         id: videoId,
         auth: oauth2Client
     });
     // Send the response
-    res.send(response.data);
-    console.log(response.data);
+    res.send(response1.data);
+    console.log(response1.data);
 });
+
 
 
 
