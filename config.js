@@ -1,8 +1,9 @@
 
-const YOUTUBE_TOKEN = process.env.YOUTUBE_TOKEN;
 const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+
+
 
 //  Some Setup
 const port = process.env.PORT || 4200;
@@ -17,11 +18,9 @@ module.exports = {
     JWT_SECRET: 'Fragsy',
     baseUri: baseUri,
     port: port,
-    YOUTUBE_TOKEN: YOUTUBE_TOKEN,
     GOOGLE_REDIRECT_URI: GOOGLE_REDIRECT_URI,
     GOOGLE_CLIENT_SECRET: GOOGLE_CLIENT_SECRET,
     GOOGLE_CLIENT_ID: GOOGLE_CLIENT_ID,
-
 
     oauth2Credentials: {
         client_id: keys.web.client_id,
@@ -37,9 +36,10 @@ module.exports = {
             keys.web.javascript_origins[0]
         ],
         scopes: [
-            'https://www.googleapis.com/auth/youtube',
-            'https://www.googleapis.com/auth/youtubepartner',
+            'https://www.googleapis.com/auth/youtube.readonly',
             'https://www.googleapis.com/auth/youtube.force-ssl',
+            'https://www.googleapis.com/auth/youtube',
+
         ]
         }
 }
