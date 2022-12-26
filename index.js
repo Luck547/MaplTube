@@ -9,24 +9,32 @@ const CONFIG = require('./config');
 const jwt = require('jsonwebtoken');
 // Import CookieParser
 const cookieParser = require('cookie-parser');
+// Import EJS
+const ejs = require('ejs');
+
 // Import The Google Apis
-const {google} = require('googleapis');
-//const {response} = require("express");
-// Define the OAuth2 Client
+const google = require('googleapis').google;
+// Import The Google Auth Library
+const googleAuth = require('google-auth-library');
 const OAuth2 = google.auth.OAuth2;
-// initialize the YouTube API library
-const youtube = google.youtube('v3');
-// Initialize gapi
-//const gapi = require('googleapis');
+
+const oauth2Client = new OAuth2(
+    CONFIG.oauth2Credentials.client_id,
+    CONFIG.oauth2Credentials.client_secret,
+    CONFIG.oauth2Credentials.redirect_uris[0]
+);
+
 
 
                                 // Authentication and Authorization Middleware
 // Declare strategy, and the Google OAuth2 API keys
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const GOOGLE_CLIENT_ID = CONFIG.GOOGLE_CLIENT_ID;
-const GOOGLE_CLIENT_SECRET = CONFIG.GOOGLE_CLIENT_SECRET;
-const GOOGLE_REDIRECT_URI = CONFIG.GOOGLE_REDIRECT_URI;
-//const YOUTUBE_TOKEN = CONFIG.YOUTUBE_TOKEN;
+const GOOGLE_CLIENT_ID = CONFIG.oauth2Credentials.client_id;
+const GOOGLE_CLIENT_SECRET = CONFIG.oauth2Credentials.client_secret;
+const GOOGLE_REDIRECT_URI = CONFIG.oauth2Credentials.redirect_uris[0];
+
+
+
 
 // Create a passport middleware to handle Google OAuth2 login
 passport.use(new GoogleStrategy({
@@ -51,15 +59,16 @@ passport.deserializeUser(function(user, done) {
                 // Create an instance of the express app and define the endpoints, cookies and sessions
 // Create an express app
 const app = express();
+
+// Set view engine to ejs
+app.set('view engine', 'ejs');
+
+
 // Use the cookie parser, session and passport middlewares
 app.use(cookieParser());
 app.use(session({ secret: 'Fragsy', saveUninitialized: true, resave: true }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Define the  Base URL for YouTube Data API
-//const baseApiUrl = 'https://www.googleapis.com/youtube/v3/videos/getRating'; // For getting video details
-//const baseApiUrl = 'https://www.googleapis.com/youtube/v3/videos'; // For getting video details
 
 // Create a route for the home page
 app.get('/', (req, res) => {
@@ -71,31 +80,47 @@ app.get('/auth/google',
 
 // Create a route for the callback
 app.get('/oauth2callback', function (req, res) {
-    const oauth2Client = new OAuth2(
-        GOOGLE_CLIENT_ID,
-        GOOGLE_CLIENT_SECRET,
-        GOOGLE_REDIRECT_URI
+    const oauth2client = new OAuth2(
+        CONFIG.oauth2Credentials.client_id,
+        CONFIG.oauth2Credentials.client_secret,
+        CONFIG.oauth2Credentials.redirect_uris[0]
     );
-    if(req.query.error){
-        res.send('You must allow the app to view your profile data.');
-        res.redirect('/');
+
+    if (req.query.error) {
+        // The user did not give us permission.
+        res.send('You did not give us permission.');
+        return res.redirect('/');
+    }   else {
+            oauth2client.getToken(req.query.code, function (err, token) {
+                if (err) {
+                    console.log(err);
+                    res.cookie('jwt', jwt.sign(token, CONFIG.JWT_SECRET));
+
+                    return res.redirect('/suscription_list');
+                } else {
+                    oauth2client.setCredentials(token);
+                    res.redirect('/success');
+                }
+    });
     }
-    else{
-        oauth2Client.getToken(req.query.code, function (err, token) {
-            if (err) {
-                console.log('Error authenticating');
-                console.log(err);
-                res.cookie(jwt, jwt.sign(token, CONFIG.JWT_SECRET));
-                return res.redirect('/');
+
+
+    oauth2Client.getToken(req.query.code, function (err, token) {
+        if (err) {
+            console.log('Error authenticating');
+            console.log(err);
+            res.cookie('jwt', jwt.sign(token, CONFIG.JWT_SECRET));
+            return res.redirect('/');
             } else {
                 console.log('Successfully authenticated');
                 oauth2Client.setCredentials(token);
                 res.cookie('tokens', token);
                 res.redirect('/success');
             }
+
     });
-    }
 });
+
 
 // Create a route for the failure
 app.get('/auth/failure', (req, res) => {
@@ -114,50 +139,92 @@ app.get('/logout', function(req, res, next) {
         console.log('Logged out');});});
 
 
+// Create a route for public information
+app.get('/public', (req, res) => {
+    const oauth2client = new OAuth2(
+        CONFIG.oauth2Credentials.client_id,
+        CONFIG.oauth2Credentials.client_secret,
+        CONFIG.oauth2Credentials.redirect_uris[0]);
+
+    const loginLink = oauth2client.generateAuthUrl({
+        access_type: 'offline',
+        scope:CONFIG.oauth2Credentials.scopes
+    });
+   return res.render('index', {loginLink: loginLink});
+
+});
+
+app.get('/subscription_list', (req, res) => {
+    const oauth2client = new OAuth2(
+        CONFIG.oauth2Credentials.client_id,
+        CONFIG.oauth2Credentials.client_secret,
+        CONFIG.oauth2Credentials.redirect_uris[0]);
+
+    const loginLink = oauth2client.generateAuthUrl({
+        access_type: 'offline',
+        scope:CONFIG.oauth2Credentials.scopes
+    });
+    return res.render('subscription_list', {loginLink: loginLink});
+
+} );
+
+
 // Create a route that get the ranking of a video by its ID with the YouTube Data API and the OAuth2 Client
-app.get('/getRating', async (req, res) => {
+app.get('/getRating', (req, res) => {
     // Get the videoId from the URL
     const videoId = req.query.videoId;
+    const api_key = req.query.YOUTUBE_TOKEN;
     console.log(videoId);
     // Get the OAuth2 Client
-    const oauth2Client = new OAuth2(
+    const oauth2Client = new google.auth.OAuth2(
         GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET,
         GOOGLE_REDIRECT_URI
     );
-    console.log(oauth2Client);
-    const SCOPES = [
-        'https://www.googleapis.com/auth/youtube',
-        'https://www.googleapis.com/auth/youtube.force-ssl',
+    const scopes = [
         'https://www.googleapis.com/auth/youtube.readonly',
-        ];
-    console.log(SCOPES);
+    ];
+
+
+    // Generate a url that asks permissions for the Drive activity scope
+    const authorizationUrl = oauth2Client.generateAuthUrl({
+        // 'online' (default) or 'offline' (gets refresh_token)
+        access_type: 'offline',
+        /** Pass in the scopes array defined above.
+         * Alternatively, if only one scope is needed, you can pass a scope URL as a string */
+        scope: scopes,
+        // Enable incremental authorization. Recommended as a best practice.
+        include_granted_scopes: true
+    });
+
+    res.writeHead(301, {"Location": authorizationUrl});
     // Get the token from the cookies
     const token = req.cookies.tokens;
-    console.log(token);
 // Set the credentials
     oauth2Client.setCredentials({
         access_token: req.cookies.tokens.access_token,
         refresh_token: req.cookies.tokens.refresh_token
     });
-    console.log(oauth2Client);
 
-    // Get the rating of the video
-    const response1 = youtube.videos.getRating({
-        client_id: GOOGLE_CLIENT_ID,
-        redirect_uri: GOOGLE_REDIRECT_URI,
-        response_type: 'token',
-        scope: SCOPES,
-        id: videoId,
+    // Get the ranking of the video
+    const youtube = google.youtube({
+        version: 'v3',
         auth: oauth2Client
     });
-    // Send the response
-    res.send(response1.data);
-    console.log(response1.data);
+youtube.videos.getRating({
+        id: videoId,
+        auth: oauth2Client,
+        part: 'snippet, statistics',
+        key: api_key
+    }, (err, data) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(data);
+        }
+    }
+);
 });
-
-
-
 
 app.listen(4200, () => {
     console.log('App listening on port 4200 :)');
