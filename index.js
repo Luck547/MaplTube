@@ -5,10 +5,8 @@ const express = require('express'); // Express web server framework
 const session = require('express-session'); // Express session middleware
 const passport = require('passport'); // Passport authentication middleware
 require('./auth'); // Load authentication strategies
-const { google } = require('googleapis'); // Google API library
-const youtube = google.youtube('v3'); // YouTube API library
-const path = require('path'); // Path library
-const {authenticate} = require('@google-cloud/local-auth'); // Local authentication library
+const getLike = require ('./getLike'); // Load getLike.js
+
 
                 // Create an instance of the express app and define the endpoints, cookies and sessions
 // Create an express app
@@ -41,7 +39,7 @@ app.get('/auth/failure', (req, res) => {
 
 // Create a route for the success
 app.get('/success', (req, res) => {
-   res.send('<a href="http://localhost:4200/getRating?videoId=QZ4BXGgmATU">http://localhost:4200/getRating?videoId=QZ4BXGgmATU</a>');
+   res.send('<a href="http://localhost:4201/getRating?videoId=QZ4BXGgmATU">http://localhost:4201/getRating?videoId=QZ4BXGgmATU</a>');
 });
 
 // Create a route for the logout
@@ -52,25 +50,17 @@ app.get('/logout', function(req, res) {
 
 // Create a route for public information
 app.get('/getRating', (req, res) => {
-    const videoId = req.query.videoId;
-    req.session.videoId = videoId;
-    res.send('<a href="/getRating">Get Rating</a>');
-    console.log(req.session.videoId);
-    console.log(videoId);
-    const auth = authenticate({
-        keyfilePath: path.join(__dirname, './oauth2.keys.json'),
-        scopes: ['https://www.googleapis.com/auth/youtube'],
-        });
-    google.options({auth});
-    const response = youtube.videos.getRating({
-        id: 'QZ4BXGgmATU',
-        auth: auth,
-    });
-    console.log(response.data);
-});
+       getLike.getLike(req.query.videoId, req.user.accessToken, (err, data) => {
+        if (err) {
+            res
+                .status(500)
+       }
+        res.send(data);
+}   )});
 
-app.listen(4200, () => {
-    console.log('App listening on port 4200 :)');
+
+app.listen(4201, () => {
+    console.log('App listening on port 4201 :)');
 });
 
 // End
