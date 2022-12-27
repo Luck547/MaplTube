@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Luck547/MaplTube#readme",
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.1",
     "axios": "^1.2.1",
     "coffee-script": "^1.12.7",
     "coffeescript": "^2.7.0",

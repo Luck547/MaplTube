@@ -12,7 +12,7 @@ const baseUri = 'http://localhost:${port}';
 //  The following code is for the Google OAuth 2.0
 //  https://developers.google.com/identity/protocols/oauth2
 
-const keys = require('./keys_new.json');
+const keys = require('./oauth2.keys.json');
 
 module.exports = {
     JWT_SECRET: 'Fragsy',
