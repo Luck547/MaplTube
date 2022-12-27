@@ -6,6 +6,8 @@ const passport = require('passport');
 // Import config file
 const CONFIG = require('./config');
 
+
+
 require('./auth');
 
 const { google } = require('googleapis');
@@ -40,6 +42,7 @@ app.get('/oauth2callback', function (req, res) {
 // Create a route for the failure
 app.get('/auth/failure', (req, res) => {
     res.send('Failed to authenticate');});
+
 // Create a route for the success
 app.get('/success', (req, res) => {
    res.send('<a href="http://localhost:4200/getRating?videoId=QZ4BXGgmATU&code=.">http://localhost:4200/getRating?videoId=QZ4BXGgmATU&code=</a>');
@@ -53,101 +56,31 @@ app.get('/logout', function(req, res) {
 
 // Create a route for public information
 app.get('/getRating', (req, res) => {
-    const session = req.session;
-    const tokens = session["tokens"];
+
+
+
     const oauth2Client = new google.auth.OAuth2(
-        CONFIG.oauth2Credentials.client_id,
-        CONFIG.oauth2Credentials.client_secret,
-        CONFIG.oauth2Credentials.redirect_uris[0]
+        process.env.CLIENT_ID,
+        process.env.CLIENT_SECRET,
+        process.env.REDIRECT_URL
     );
-    oauth2Client.setCredentials(tokens);
-    const youtube = google.youtube({
-        version: 'v3',
-        auth: oauth2Client
 
-    }
-    );
-    youtube.videos.getRating({
-        id: 'M7lc1UVf-VE',
-        auth: oauth2Client
 
-    })
-    .then((response) => {
-        res.send(response.data);
-        })
-    .catch((err) => {
-        console.log(err);
-        }
-    );
-});
 
-app.get('/subscription_list', () => {
-    const oauth2client = new OAuth2(
-        CONFIG.oauth2Credentials.client_id,
-        CONFIG.oauth2Credentials.client_secret,
-        CONFIG.oauth2Credentials.redirect_uris[0]);
-
-    const youtube = google.youtube({
-        version: 'v3',
-        auth: oauth2client
+    oauth2Client.setCredentials({
+        refresh_token: CONFIG.REFRESH_TOKEN
     });
-    const params = {
-        videoId: 'QZ4BXGgmATU',
-        id : 'QZ4BXGgmATU',
-    }
-
-    async function runSample() {
-        const res = await youtube.videos.getRating(params);
-        console.log(`The blog url is ${res.data.res}`);
-    }
-    runSample().catch(console.error);
-
-    youtube.videos.getRating(params, (err, response) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(response.data);
-        }
-
+    const youtube = google.youtube({
+        version: 'v3',
+        auth: oauth2Client
+    });
+    youtube.videos.getRating({
+        id: req.query.videoId,
+    }).then((response) => {
+        res.send(response.data);
 
     }   );
-    }    );
-
-
-// Create a route that get the ranking of a video by its ID with the YouTube Data API and the OAuth2 Client
-app.get('/getRating2', (req, res) => {
-    // Get the videoId from the URL
-    const videoId = '3VHCxuxtuL8';
-    const api_key = 'AIzaSyD1m8mu9rBNy1di-MhK9n49I7lC20U6g00';
-    console.log(videoId);
-    console.log(api_key);
-
-    // Create a new instance of the YouTube Data API
-
-
-    const scopes = [
-        'https://www.googleapis.com/auth/youtube.readonly',
-    ];
-        const url = oauth2Client.generateAuthUrl({
-            access_type: 'offline',
-            scope: scopes,
-        });
-        console.log(url);
-
-        // Get the YouTube Data API
-        const youtube = google.youtube({
-            version: 'v3',
-            auth: oauth2Client
-        });
-
-        // Get the rating of the video
-        youtube.videos.getRating({
-            auth: oauth2Client,
-            id: videoId,
-    });
-    res.send('Rating of the video with ID ' + videoId + ' is ' + rating);
 });
-
 
 app.listen(4200, () => {
     console.log('App listening on port 4200 :)');
