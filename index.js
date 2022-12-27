@@ -1,17 +1,14 @@
 
-require('dotenv').config();
-const express = require('express');
-const session = require('express-session');
-const passport = require('passport');
-// Import config file
-const CONFIG = require('./config');
-
-
-
-require('./auth');
-
-const { google } = require('googleapis');
-
+// Imports
+require('dotenv').config(); // Load environment variables from .env file
+const express = require('express'); // Express web server framework
+const session = require('express-session'); // Express session middleware
+const passport = require('passport'); // Passport authentication middleware
+require('./auth'); // Load authentication strategies
+const { google } = require('googleapis'); // Google API library
+const youtube = google.youtube('v3'); // YouTube API library
+const path = require('path'); // Path library
+const {authenticate} = require('@google-cloud/local-auth'); // Local authentication library
 
                 // Create an instance of the express app and define the endpoints, cookies and sessions
 // Create an express app
@@ -38,14 +35,13 @@ app.get('/oauth2callback', function (req, res) {
     res.redirect('/success');
     });
 
-
 // Create a route for the failure
 app.get('/auth/failure', (req, res) => {
     res.send('Failed to authenticate');});
 
 // Create a route for the success
 app.get('/success', (req, res) => {
-   res.send('<a href="http://localhost:4200/getRating?videoId=QZ4BXGgmATU&code=.">http://localhost:4200/getRating?videoId=QZ4BXGgmATU&code=</a>');
+   res.send('<a href="http://localhost:4200/getRating?videoId=QZ4BXGgmATU">http://localhost:4200/getRating?videoId=QZ4BXGgmATU</a>');
 });
 
 // Create a route for the logout
@@ -56,51 +52,25 @@ app.get('/logout', function(req, res) {
 
 // Create a route for public information
 app.get('/getRating', (req, res) => {
-
-
-
-    const oauth2Client = new google.auth.OAuth2(
-        process.env.CLIENT_ID,
-        process.env.CLIENT_SECRET,
-        process.env.REDIRECT_URL
-    );
-
-
-
-    oauth2Client.setCredentials({
-        refresh_token: CONFIG.REFRESH_TOKEN
+    const videoId = req.query.videoId;
+    req.session.videoId = videoId;
+    res.send('<a href="/getRating">Get Rating</a>');
+    console.log(req.session.videoId);
+    console.log(videoId);
+    const auth = authenticate({
+        keyfilePath: path.join(__dirname, './oauth2.keys.json'),
+        scopes: ['https://www.googleapis.com/auth/youtube'],
+        });
+    google.options({auth});
+    const response = youtube.videos.getRating({
+        id: 'QZ4BXGgmATU',
+        auth: auth,
     });
-    const youtube = google.youtube({
-        version: 'v3',
-        auth: oauth2Client
-    });
-    youtube.videos.getRating({
-        id: req.query.videoId,
-    }).then((response) => {
-        res.send(response.data);
-
-    }   );
+    console.log(response.data);
 });
 
 app.listen(4200, () => {
     console.log('App listening on port 4200 :)');
 });
-
-
-
-
-// example of a video ID response
-//{
-//    "kind": "youtube#videoGetRatingResponse",
-//    "etag": "CNWHKXVdwtQa2ruz_Qyl34C-z-o",
-//    "items": [
-//    {
-//        "videoId": "XsUY50S1_Fk",
-//        "rating": "like"
-//    }
-//]
-//}
-
-
 
 // End
