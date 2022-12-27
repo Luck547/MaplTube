@@ -1,5 +1,6 @@
 
 // Imports
+const sqlite3 = require('sqlite3');
 require('dotenv').config(); // Load environment variables from .env file
 const express = require('express'); // Express web server framework
 const session = require('express-session'); // Express session middleware
@@ -58,9 +59,32 @@ app.get('/getRating', (req, res) => {
         res.send(data);
 }   )});
 
-
 app.listen(4201, () => {
     console.log('App listening on port 4201 :)');
+});
+
+const db = new sqlite3.Database('./database.db', (err) => {
+    if (err) {
+        console.error("Erro opening database " + err.message);
+    } else {
+
+        db.run('CREATE TABLE rating( \
+            employee_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,\
+            videoId NVARCHAR(20)  NOT NULL,\
+            first_name NVARCHAR(20)  NOT NULL,\
+            title NVARCHAR(20),\
+            address NVARCHAR(100),\
+            country_code INTEGER\
+        )', (err) => {
+            if (err) {
+                console.log("Table already exists.");
+            }
+            let insert = 'INSERT INTO rating (videoId, first_name, title, address, country_code) VALUES (?,?,?,?,?)';
+            db.run(insert, ["Chandan", "Praveen", "SE", "Address 1", 1]);
+            db.run(insert, ["Samanta", "Mohim", "SSE", "Address 2", 1]);
+            db.run(insert, ["Gupta", "Pinky", "TL", "Address 3", 1]);
+        });
+    }
 });
 
 // End

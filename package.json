@@ -43,6 +43,7 @@
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
     "request": "^2.88.2",
-    "server-destroy": "^1.0.1"
+    "server-destroy": "^1.0.1",
+    "sqlite3": "^5.1.4"
   }
 }
